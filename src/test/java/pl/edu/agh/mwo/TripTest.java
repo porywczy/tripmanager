@@ -1,11 +1,12 @@
 package pl.edu.agh.mwo;
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Test;
 
 //testy klasy Trip
 public class TripTest {
-
+	
 	//test konstruktora
 	@Test
 	public void testConstructor() {
@@ -15,5 +16,5 @@ public class TripTest {
 		assertEquals("nazwa", trip.getName());
 		assertEquals("opis", trip.getDescription());
 	}
-
+	
 }
