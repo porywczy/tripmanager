@@ -8,14 +8,16 @@ import org.junit.Test;
 public class TripManagerTest {
 
 	TripManager tripManager;
-	Trip trip;
-	Photo photo;
+	Trip trip, trip1;
+	Photo photo, photo1;
 
 	@Before
 	public void setUp() {
 		tripManager = new TripManager();
 		trip = new Trip("nazwa", "opis");
+		trip1 = new Trip("nazwa1", "opis1");
 		photo = new Photo("super");
+		photo1 = new Photo("super1");
 	}
 
 	@Test
@@ -53,6 +55,13 @@ public class TripManagerTest {
 		assertEquals(0, tripManager.getTrips().size());
 		// fail("chcemy zespuc");
 	}
+	
+	@Test
+	public void testFindReturnFalse() throws TripAlreadyExistsException {
+
+		tripManager.add(trip);
+		assertEquals(false, tripManager.find("name"));
+	}
 
 	// keyword to pusty string
 	@Test
@@ -85,7 +94,11 @@ public class TripManagerTest {
 	public void testFindKeywordAnyPhotoDescription() throws TripAlreadyExistsException {
 
 		trip.addPhoto(photo);
+		trip.addPhoto(photo1);
+		trip1.addPhoto(photo);
+		trip1.addPhoto(photo1);
 		tripManager.add(trip);
+		tripManager.add(trip1);
 		assertEquals(true, tripManager.find("super"));
 	}
 }
