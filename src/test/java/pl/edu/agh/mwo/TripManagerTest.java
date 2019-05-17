@@ -9,11 +9,13 @@ public class TripManagerTest {
 
 	TripManager tripManager;
 	Trip trip;
+	Photo photo;
 
 	@Before
 	public void setUp() {
 		tripManager = new TripManager();
 		trip = new Trip("nazwa", "opis");
+		photo = new Photo("super");
 	}
 
 	@Test
@@ -52,16 +54,38 @@ public class TripManagerTest {
 		// fail("chcemy zespuc");
 	}
 
+	// keyword to pusty string
 	@Test
-	public void testFind() {
-//		tripManager.add(trip);
-//		
-//		assertEquals(1, tripManager.getTrips().size());
-//		
-//		if (tripList.get(name) != null) {
-//			System.out.println("trip istnieje w kolekcji");
-//		} else {
-//			System.out.println("trip NIE istnieje w kolekcji");
-//		}
+	public void testFindKeywordEmpty() throws TripAlreadyExistsException {
+
+		tripManager.add(trip);
+		assertEquals(true, tripManager.find(""));
+	}
+
+	// Trip.name zawiera keyword
+	// ktorys klucz w mapie contains keyword
+	@Test
+	public void testFindKeywordInName() throws TripAlreadyExistsException {
+
+		tripManager.add(trip);
+		assertEquals(true, tripManager.find("nazwa"));
+	}
+
+	// Trip.description zawiera keyword
+	// description ktoregos Trip w mapie zawiera keyword
+	@Test
+	public void testFindKeywordInDescription() throws TripAlreadyExistsException {
+
+		tripManager.add(trip);
+		assertEquals(true, tripManager.find("opis"));
+	}
+
+	// Photo.comment jednego ze zdjęć obecnego w danym Trip zawiera keyword
+	@Test
+	public void testFindKeywordAnyPhotoDescription() throws TripAlreadyExistsException {
+
+		trip.addPhoto(photo);
+		tripManager.add(trip);
+		assertEquals(true, tripManager.find("super"));
 	}
 }
